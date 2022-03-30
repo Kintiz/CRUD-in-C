@@ -1,219 +1,416 @@
 #include <stdio.h> 
-#include <stdlib.h> //system("pause"); system("cls");
-#include <locale.h> //setlocale(LC_ALL, "Portuguese");
+#include <stdlib.h> // system("pause"); system("cls");
+#include <locale.h> // setlocale(LC_ALL, "Portuguese");
 #include <conio.h> // getch();
 #include <string.h>
-#include <time.h>
-#define termino "nao" || "não" //do while
+#include <time.h> //adicionar horario
+#define termino "nao" //do while
 #define outro "sim" //do while
+#define TAM 200
 
-typedef struct tmo {
+void tela_inicial ();
+void cadastrar_funcionarios ();
+void imprimir_funcionarios ();
+void salvar_funcionarios ();
+void deletar_funcionario ();
+void pesquisar_funcionarios ();
+void modificar_funcionarios ();
+
+typedef struct tCadastro {  //ESTRUTURA DE DADOS DO CADASTRO
+
+	int idade[TAM];
+	int cpf[TAM];
+	char nome [TAM][50];
+	char ter [5]; //do while
+	char iu [5]; //do while
+	
+}tCadastro;
+
+typedef struct tmo { //ESTRUTURA DE MARCAï¿½ï¿½O DE HORARIO
 	
 int sec, min, hour, dia, mes, ano; 
 
 }tmo;
 
-typedef struct tCadastro {  //ESTRUTURA DE DADOS DO CADASTRO
+int tecla () { //ESTRUTURA QUE HABILITA USO DE TECLAS
+    int varTecla;
+    while (1) {
+        if (kbhit()) {
+            varTecla = getch();
+            return varTecla;
+        }
+    }
+}
 
-	int a, sw, remove, id;
-	int idade, cpf;	
-	float salario;
-	char curso [70];
-	char nome [50];
-	char ter [5];
-	char iu [5];
-	FILE *arq;
+int main () { //FUNï¿½ï¿½O PRINCIPAL
 	
-}tCadastro;
-
-/*void tela_cadastro () {
+	setlocale(LC_ALL, "Portuguese"); //LINGUA LOCAL PORTUGUï¿½S
 	
 	tCadastro cadastro;
 	
-	system("cls");
-			
-	printf("Informe o nome do funcionário: ");
-	fflush(stdin);
-	gets(cadastro.nome);
-		
-	printf("Informe a idade do funcionário: ");
-	scanf("%d", &cadastro.idade);
-			
-	printf("Informe o CPF do funcionario: ");
-	scanf("%d", &cadastro.cpf);	
-			
-	printf("Informe o nível de escolaridade do funcionário: ");
-	fflush(stdin);
-	gets (cadastro.curso);
-			
-	printf("Informe o salario do funcionario: ");
-	scanf("%f", &cadastro.salario);
-        	
-	system("cls");
-				
-	printf("\n\n----------- Funcionário ------------\n\n");
-	printf("Nome: %s \n", cadastro.nome);
-	printf("Idade: %d \n", cadastro.idade);
-	printf("CPF: %d \n", cadastro.cpf);
-	printf("Escolaridade: %s \n", cadastro.curso);
-	printf("Salário: %.2f \n", cadastro.salario);
-	
-	printf("\n\nFuncionário Cadastrado! \n\n");			
-				
-}*/
-
-int main () {
-	
-	int i = 1;
-	
-	setlocale(LC_ALL, "Portuguese");
-	
-	tCadastro cadastro;
-	
-	tCadastro **c;
-	
-	tmo *atual;     
-	time_t segundos;
-	time(&segundos);
-	atual = localtime(&segundos);
-	
-	for(i=0;i<10;i++){
-		printf("/");
-		system("color CF");
-		system("cls");
-		printf("|");
-		system("color AF");
-		system("cls");
-		printf("\\");
-		system("color 3F");
-		system("cls");
-		printf("-");
-		system("color 7F");
-		system("cls");
-	}
-	
-	
-	
-     
-	do {
-		
-	/*system("cls");
-	printf("1 - Cadastro de funcionário                                                                    %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
-	printf("2 - Lista de funcionários cadastrados \n");
-	printf("3 - Deletar um cadastro de funcionario \n");
-	printf("4 - Pesquisar o cadastro de um funcionário \n");
-	printf("5 - Modificar informações sobre cadastro de um funcionário \n");
-	printf("0 - Sair: \n");
-	scanf("%d", &cadastro.sw);*/
-	
-	switch (cadastro.sw) {
-		
-		case 1: //SOLICITA E ARMAZENA NO ARQUIVO.TXT OS DADOS
-
-		do  {
-			//tela_cadastro;
-			
-			printf("Deseja adicionar outro cadastro? ");
-			fflush(stdin);
-			scanf("%s", &cadastro.iu);
-				
-		} while (strcmp(outro, cadastro.iu) == 0);
-				
-			system("cls");
-		break;
-		
-		
-		case 2:  //IMPRIME OS CADASTROS PRESENTES NO ARQUIVO.TXT	
-			
-			system("cls");
-			
-			cadastro.arq = fopen ("binario.bin", "rb");
-			
-			if (cadastro.arq == NULL) {
-				printf("Arquivo não abriu \n");
-			}
-			
-			//for(i=0;i<quant;i++){
-				while (fread(&cadastro, sizeof(tCadastro), 1, cadastro.arq)){
-				printf("\n--------- Funcionário ---------\n\n");
-				printf("Nome: %s \n", cadastro.nome);
-				printf("Idade: %d \n", cadastro.idade);
-				printf("CPF: %d \n", cadastro.cpf);
-				printf("Escolaridade: %s \n", cadastro.curso);
-				printf("Salário: %.2f \n\n", cadastro.salario);
-			}
-			
-			fclose (cadastro.arq);	
-							
-		break;
-			
-		case 3: //DELETA UM CADASTRO
-			break;
-			
-		case  4: //PROCURA UM CADASTRO
-		
-			break;
-			
-			
-		case 5: //MODIFICA OS DADOS DO ARQUIVO.TXT
-
-			cadastro.arq = fopen("binario.bin", "ab+");
-			
-			if (cadastro.arq) {
-				
-				system("cls");
-				
-				while (fread(&cadastro, sizeof(tCadastro), 1, cadastro.arq)){
-					printf("\n--------- %d Funcionário ---------\n\n", i);
-					printf("Nome: %s \n", cadastro.nome);
-					printf("Idade: %d \n", cadastro.idade);
-					printf("CPF: %d \n", cadastro.cpf);
-					printf("Escolaridade: %s \n", cadastro.curso);					
-					printf("Salário: %.2f \n\n", cadastro.salario);
-					i++;
-				}
-				
-				printf("Informe o id do funcionario: ");
-				scanf("%d", &i);
-				getchar();
-				
-				if( i >= 0 && i < cadastro.id - 1){									
-					printf("Informe o nome do funcionário: ");
-					fflush(stdin);
-					gets(cadastro.nome);
-			
-					printf("Informe a idade do funcionário: ");
-					scanf("%d", &cadastro.idade);
-					
-					printf("Informe o CPF do funcionario: ");
-					scanf("%d", &cadastro.cpf);	
-						
-					printf("Informe o nível de escolaridade do funcionário: ");
-					fflush(stdin);
-					gets(cadastro.curso);
-						
-					printf("Informe o salario do funcionario: ");
-					scanf("%f", &cadastro.salario);
-					
-					fseek(cadastro.arq, i * sizeof(tCadastro), SEEK_SET);
-					fwrite(&cadastro, sizeof(tCadastro), 1, cadastro.arq);
-					
-				} fclose(cadastro.arq);
-				
-			} else printf("Arquivo não abriu \n");
-			
-			break;
-			
-			default: 
-			printf("Programa Finalizado! ");
-			return 0;
-	}
-	
-	printf("Deseja Finalizar o programa? ");
-	scanf("%s", &cadastro.ter);
-	
-	} while (strcmp(termino, cadastro.ter) == 0);
+	tela_inicial ();
 	
 return 0;
 }
 
+void tela_inicial () { //PAGINA INICIAL DO PROGRAMA
+	
+	tmo *atual;
+	time_t segundos; //FORMATA PARA SEGUNDOS
+	time(&segundos); //LOCAL DE MEMORIA DOS SEGUNDOS
+	atual = localtime(&segundos); //HORARIO DO LOCAL ATUAL
+
+    int c, i;
+    int linha = 0;
+    
+    system("cls");
+    	
+		for(i=0;i<5;i++){ //TELA DE CARREGAMENTO
+		printf("\n\n\t/ / / / / / CARREGANDO / / / / / /");
+		Sleep(100);
+		//system("color CF");
+		system("cls");
+		printf("\n\n\t| | | | | | CARREGANDO | | | | | |");
+		Sleep(100);
+		//system("color AF");
+		system("cls");
+		printf("\n\n\t\\ \\ \\ \\ \\ \\ CARREGANDO \\ \\ \\ \\ \\ \\ ");
+		Sleep(100);
+		//system("color 3F");
+		system("cls");
+		printf("\n\n\t- - - - - - CARREGANDO - - - - - -");
+		Sleep(100);
+		//system("color 7F");
+		system("cls");
+	}
+	//TELA PRINCIPAL COM OPï¿½ï¿½ES
+	printf("\t\t %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
+    printf("1 ~> Cadastro de funcionï¿½rio \n"
+           "2    Lista de funcionï¿½rios cadastrados \n"
+           "3    Salvar Funcionarios \n"
+		   "4    Deletar um cadastro de funcionario \n"
+		   "5    Pesquisar o cadastro de um funcionï¿½rio \n"
+		   "6    Modificar informaï¿½ï¿½es sobre cadastro de um funcionï¿½rio \n"
+		   "0    Sair");
+
+    while (1) { // CONDICIONAL PARA USO DAS TECLAS
+        if (kbhit()) {
+            system("cls");
+            c = tecla();
+
+            if (c == 80) { //APERTAR PARA BAIXO
+                linha++;
+                if (linha > 6)
+                    linha = 0;
+            }
+            if (c == 72) {  // APERTAR PARA CIMA
+                linha--;
+                if (linha < 0)
+                    linha = 6;
+            }
+            if (c == 13)  {  // APERTAR ENTER
+            	if (linha == 0) {
+                	
+                    cadastrar_funcionarios ();
+
+                } else if (linha == 1) {
+                	
+                    imprimir_funcionarios ();
+
+                } else if (linha == 2) {
+                	
+                    salvar_funcionarios ();
+                
+                } else if (linha == 3) {
+                	
+                    deletar_funcionario ();
+                    
+                } else if (linha == 4) {
+                	
+ 					pesquisar_funcionarios ();
+ 					
+                } else if (linha == 5) {
+                	
+					moificar_funcionarios ();
+					
+                } else if (linha == 6) {
+                    system("cls");
+                    	for(i=0;i<5;i++){ // TELA DE CARREGAMENTO
+							printf("\n\n\t/ / / / / / FECHANDO PROGRAMA / / / / / /");
+							Sleep(100);
+							//system("color CF");
+							system("cls");
+							printf("\n\n\t| | | | | | FECHANDO PROGRAMA | | | | | |");
+							Sleep(100);
+							//system("color AF");
+							system("cls");
+							printf("\n\n\t\\ \\ \\ \\ \\ \\ FECHANDO PROGRAMA \\ \\ \\ \\ \\ \\ ");
+							Sleep(100);
+							//system("color 3F");
+							system("cls");
+							printf("\n\n\t- - - - - - FECHANDO PROGRAMA - - - - - -");
+							Sleep(100);
+							//system("color 7F");
+							system("cls");
+							}
+                    exit(0);
+                }
+            }// POSIï¿½ï¿½ES DA SETA
+            if (linha == 0) { 
+            	printf("\t\t %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
+	            printf("1 ~> Cadastro de funcionï¿½rio \n"
+           		"2    Lista de funcionï¿½rios cadastrados \n"
+           		"3    Salvar Funcionarios \n"
+		   		"4    Deletar um cadastro de funcionario \n"
+		   		"5    Pesquisar o cadastro de um funcionï¿½rio \n"
+		   		"6    Modificar informaï¿½ï¿½es sobre cadastro de um funcionï¿½rio \n"
+		   		"0    Sair");
+
+            }
+            if (linha == 1) {
+            	printf("\t\t %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
+	            printf("1    Cadastro de funcionï¿½rio \n"
+           		"2 ~> Lista de funcionï¿½rios cadastrados \n"
+           		"3    Salvar Funcionarios \n"
+		   		"4    Deletar um cadastro de funcionario \n"
+		   		"5    Pesquisar o cadastro de um funcionï¿½rio \n"
+		   		"6    Modificar informaï¿½ï¿½es sobre cadastro de um funcionï¿½rio \n"
+		   		"0    Sair");
+
+            }
+            if (linha == 2) {
+            	printf("\t\t %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
+	            printf("1    Cadastro de funcionï¿½rio \n"
+           		"2    Lista de funcionï¿½rios cadastrados \n"
+           		"3 ~> Salvar Funcionarios \n"
+		   		"4    Deletar um cadastro de funcionario \n"
+		   		"5    Pesquisar o cadastro de um funcionï¿½rio \n"
+		   		"6    Modificar informaï¿½ï¿½es sobre cadastro de um funcionï¿½rio \n"
+		   		"0    Sair");
+            }
+            if (linha == 3) {
+            	printf("\t\t %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
+	            printf("1    Cadastro de funcionï¿½rio \n"
+           		"2    Lista de funcionï¿½rios cadastrados \n"
+           		"3    Salvar Funcionarios \n"
+		   		"4 ~> Deletar um cadastro de funcionario \n"
+		   		"5    Pesquisar o cadastro de um funcionï¿½rio \n"
+		   		"6    Modificar informaï¿½ï¿½es sobre cadastro de um funcionï¿½rio \n"
+		   		"0    Sair");
+			}
+			if (linha == 4) {
+				printf("\t\t %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
+	            printf("1    Cadastro de funcionï¿½rio \n"
+           		"2    Lista de funcionï¿½rios cadastrados \n"
+           		"3    Salvar Funcionarios \n"
+		   		"4    Deletar um cadastro de funcionario \n"
+		   		"5 ~> Pesquisar o cadastro de um funcionï¿½rio \n"
+		   		"6    Modificar informaï¿½ï¿½es sobre cadastro de um funcionï¿½rio \n"
+		   		"0    Sair");
+			}
+			if (linha == 5) {
+				printf("\t\t %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
+	            printf("1    Cadastro de funcionï¿½rio \n"
+           		"2    Lista de funcionï¿½rios cadastrados \n"
+           		"3    Salvar Funcionarios \n"
+		   		"4    Deletar um cadastro de funcionario \n"
+		   		"5    Pesquisar o cadastro de um funcionï¿½rio \n"
+		   		"6 ~> Modificar informaï¿½ï¿½es sobre cadastro de um funcionï¿½rio \n"
+		   		"0    Sair");
+			}
+			if (linha == 6) {
+				printf("\t\t %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
+	            printf("1    Cadastro de funcionï¿½rio \n"
+           		"2    Lista de funcionï¿½rios cadastrados \n"
+           		"3    Salvar Funcionarios \n"
+		   		"4    Deletar um cadastro de funcionario \n"
+		   		"5    Pesquisar o cadastro de um funcionï¿½rio \n"
+		   		"6    Modificar informaï¿½ï¿½es sobre cadastro de um funcionï¿½rio \n"
+		   		"0 ~> Sair");
+			}
+        }
+    }
+}
+
+void cadastrar_funcionarios () { //TELA DE CADASTRO
+	
+	int id;
+	tCadastro cadastro;
+	
+	do{
+	
+		system("cls");
+			
+	printf("Informe o nome do funcionï¿½rio: ");
+	fflush(stdin);
+	fgets(cadastro.nome[id], 50, stdin);
+		
+	printf("Informe a idade do funcionï¿½rio: ");
+	scanf("%d", &cadastro.idade[id]);
+	
+	printf("Informe o CPF do duncionï¿½rio: ");
+	scanf("%d", &cadastro.cpf[id]);
+        	
+	system("cls");
+	
+	printf("\n\n----------- Funcionï¿½rio ------------\n\n");
+	printf("Nome: %s \n", cadastro.nome[id]);
+	printf("Idade: %d \n", cadastro.idade[id]);
+	printf("CPF: %d \n", cadastro.cpf[id]);
+	printf("------------------------------------\n\n");
+	
+	printf("\n\nFuncionï¿½rio Cadastrado com sucesso! \n\n");
+	
+	printf("\n\nDeseja adicionar outro cadastro? \n");
+	fflush(stdin);
+	scanf("%s", &cadastro.iu);
+	
+		system("cls");
+
+	id++; //PARA AVANï¿½AR DE LUGAR NO VETOR		
+	} while (strcmp(outro, cadastro.iu) == 0);
+		
+}
+
+void imprimir_funcionarios () { //TELA DE IMPRESSï¿½O DE FUNCIONARIOS
+	
+	tCadastro cadastro;
+
+	int i;
+	
+		system("cls");
+	
+	for(i=0;i<TAM;i++) {
+		if(cadastro.idade[i]>0) {
+			printf("\n\n----------- Funcionï¿½rio ------------\n\n");
+			printf("Nome: %s \n", cadastro.nome[i]);
+			printf("Idade: %d \n", cadastro.idade[i]);
+			printf("CPF: %d \n", cadastro.cpf[i]);
+			printf("------------------------------------\n\n");
+		} else {
+			break;
+		}
+	}
+		
+	system("pause");
+	system("cls");
+	
+}
+
+void salvar_funcionarios () { //SALVA EM ARQUIVO .BIN
+	
+	int i;
+	tCadastro cadastro;
+	FILE *file = fopen("cadastros.bin", "wb");
+	
+		
+			if (file == NULL) {
+				printf("Arquivo nï¿½o abriu");
+			}
+			
+			fwrite(&cadastro, sizeof(tCadastro), 1, file);
+			
+			printf("\n\nFuncionï¿½rio salvo! \n\n");
+			system("pause");
+			system("cls");
+			fclose (file);
+	
+}
+
+void deletar_funcionario () { //"DELETA" FUNCIONARIO SELECIONADO
+	
+	tCadastro cadastro;
+	int pesquisa, i;
+	
+	do {
+		printf("Digite o CPF do funcionï¿½rio: ");
+		scanf("%d", &pesquisa);
+		
+		for(i=0;i<TAM;i++){
+			if(cadastro.cpf[i] == pesquisa){
+				cadastro.idade[i]=0; //ATRIBUI VALOR DA IDADE A ZERO
+				printf("\nCadastro deletado\n\n");
+				system("pause");
+				break;
+			}
+		}
+		
+		system("cls");
+			
+	} while (strcmp(outro, cadastro.iu) == 0);	
+		
+}
+
+void pesquisar_funcionarios () {//VARRE OS DADOS E INFORMA O SELECIONADO
+	
+	tCadastro cadastro;
+	int pesquisa, i;
+	
+	do {
+		printf("Digite o CPF do funcionï¿½rio: ");
+		scanf("%d", &pesquisa);
+		
+		for(i=0;i<TAM;i++){
+			if(cadastro.cpf[i] == pesquisa){
+			printf("\n\n----------- Funcionï¿½rio ------------\n\n");
+			printf("Nome: %s \n", cadastro.nome[i]);
+			printf("Idade: %d \n", cadastro.idade[i]);
+			printf("CPF: %d \n", cadastro.cpf[i]);
+			printf("------------------------------------\n\n");
+			} 
+		}
+		  
+	printf("Deseja pesquisar outro cadastro? \n");
+	fflush(stdin);
+	scanf("%s", &cadastro.iu);
+	
+		system("cls");
+			
+	} while (strcmp(outro, cadastro.iu) == 0);
+}
+
+void moificar_funcionarios ()  {//PESQUISA E MODIFICA OS DADOS
+	
+	tCadastro cadastro;
+	int pesquisa, i, aux;
+	char aux1[50];
+	
+	do {
+		printf("Digite o CPF do funcionï¿½rio: ");
+		scanf("%d", &pesquisa);
+		
+		for(i=0;i<TAM;i++){
+			if(cadastro.cpf[i] == pesquisa){
+				printf("\n\n----------- Funcionï¿½rio ------------\n\n");
+				printf("Nome: %s \n", cadastro.nome[i]);
+				printf("Idade: %d \n\n\n", cadastro.idade[i]);
+				printf("CPF: %d \n", cadastro.cpf[i]);
+				printf("------------------------------------\n\n");
+				
+				printf("Digite o novo nome: ");
+				fflush(stdin);
+				fgets(aux1, 50, stdin);
+				strcpy(cadastro.nome[i], aux1);
+
+				printf("Digite a nova idade: ");
+				scanf("%d", &aux);
+				cadastro.idade[i] = aux;
+				
+				printf("\n\n----------- Funcionï¿½rio ------------\n\n");
+				printf("Nome: %s \n", cadastro.nome[i]);
+				printf("Idade: %d \n\n\n", cadastro.idade[i]);
+				printf("CPF: %d \n", cadastro.cpf[i]);
+				printf("------------------------------------\n\n");
+			} 
+		}
+		  
+	printf("Deseja modificar outro cadastro? \n");
+	fflush(stdin);
+	scanf("%s", &cadastro.iu);
+	
+		system("cls");
+			
+	} while (strcmp(outro, cadastro.iu) == 0);	
+	
+	
+}
