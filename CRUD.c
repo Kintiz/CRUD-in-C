@@ -26,7 +26,7 @@ typedef struct tCadastro {  //ESTRUTURA DE DADOS DO CADASTRO
 	
 }tCadastro;
 
-typedef struct tmo { //ESTRUTURA DE MARCA��O DE HORARIO
+typedef struct tmo { //ESTRUTURA DE MARCAÇÃO DE HORARIO
 	
 int sec, min, hour, dia, mes, ano; 
 
