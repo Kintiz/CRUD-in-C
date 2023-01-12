@@ -5,6 +5,7 @@
 #include <string.h>
 #include <time.h> //adicionar horario
 #define termino "nao" //do while
+#include <Windows.h> // Sleep();
 #define outro "sim" //do while
 #define TAM 200
 
@@ -58,7 +59,7 @@ void tela_inicial () { //PAGINA INICIAL DO PROGRAMA
 	tmo *atual;
 	time_t segundos; //FORMATA PARA SEGUNDOS
 	time(&segundos); //LOCAL DE MEMORIA DOS SEGUNDOS
-	atual = localtime(&segundos); //HORARIO DO LOCAL ATUAL
+//	atual = localtime(&segundos); //HORARIO DO LOCAL ATUAL
 
     int c, i;
     int linha = 0;
