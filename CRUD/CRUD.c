@@ -370,7 +370,7 @@ void pesquisar_funcionarios () {//VARRE OS DADOS E INFORMA O SELECIONADO
 	} while (strcmp(outro, cadastro.iu) == 0);
 }
 
-void moificar_funcionarios ()  {//PESQUISA E MODIFICA OS DADOS
+void modificar_funcionarios ()  {//PESQUISA E MODIFICA OS DADOS
 	
 	tCadastro cadastro;
 	int pesquisa, i, aux;
