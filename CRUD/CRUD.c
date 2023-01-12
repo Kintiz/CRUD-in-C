@@ -131,7 +131,7 @@ void tela_inicial () { //PAGINA INICIAL DO PROGRAMA
  					
                 } else if (linha == 5) {
                 	
-					moificar_funcionarios ();
+					modificar_funcionarios ();
 					
                 } else if (linha == 6) {
                     system("cls");
