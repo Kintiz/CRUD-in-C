@@ -1,417 +1,248 @@
-#include <stdio.h> 
-#include <stdlib.h> // system("pause"); system("cls");
-#include <locale.h> // setlocale(LC_ALL, "Portuguese");
-#include <conio.h> // getch();
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <time.h> //adicionar horario
-#define termino "nao" //do while
+#include <time.h> // struct tm
+#include <conio.h> // getch();kbhit();
 #include <Windows.h> // Sleep();
-#define outro "sim" //do while
-#define TAM 200
 
-void tela_inicial ();
-void cadastrar_funcionarios ();
-void imprimir_funcionarios ();
-void salvar_funcionarios ();
-void deletar_funcionario ();
-void pesquisar_funcionarios ();
-void modificar_funcionarios ();
+struct closet {
+   int id;
+   char color[50], size[50], aspect[50];
+};
 
-typedef struct tCadastro {  //ESTRUTURA DE DADOS DO CADASTRO
+struct closet s[20];
+int count = 0;
+// Function to add a new shirt in closet
+void createShirt() {
+   printf("Enter the details of the shirt: \n");
+   printf("ID: ");
+   scanf("%d", &s[count].id);
+   printf("Color: ");
+   scanf("%s", s[count].color);
+   printf("Size: ");
+   scanf("%s", s[count].size);
+   printf("Aspect: ");
+   scanf("%s", s[count].aspect);
+   count++;
+   printf("Shirt added successfully.\n\n");
+   
+   getch();
+   system("cls");
+}
 
-	int idade[TAM];
-	int cpf[TAM];
-	char nome [TAM][50];
-	char ter [5]; //do while
-	char iu [5]; //do while
-	
-}tCadastro;
+// Function to search for a shirt in closet
+void readShirt() {
+   int id, i;
+   printf("Enter the ID of the shirt: ");
+   scanf("%d", &id);
+   for (i = 0; i < count; i++) {
+      if (s[i].id == id) {
+        printf("ID: %d\n", s[i].id);
+        printf("Color: %s\n", s[i].color);
+        printf("Size: %s\n", s[i].size);
+        printf("Aspect: %s\n", s[i].aspect);
+         		 
+		getch();
+   		system("cls");
+        return;
+      }
+   }
+   printf("Shirt not found.\n\n");
+   
+   getch();
+   system("cls");
+}
 
-typedef struct tmo { //ESTRUTURA DE MARCAÇÃO DE HORARIO
-	
-int sec, min, hour, dia, mes, ano; 
+// Function to update a shirt in closet
+void updateShirt() {
+   int id, i;
+   printf("Enter the ID of the shirt: ");
+   scanf("%d", &id);
+   for (i = 0; i < count; i++) {
+      if (s[i].id == id) {
+         printf("Enter the new details of the shirt: \n");
+         printf("ID: ");
+         scanf("%d", &s[i].id);
+         printf("Color: ");
+   		 scanf("%s", s[count].color);
+   		 printf("Size: ");
+   		 scanf("%s", s[count].size);
+   		 printf("Aspect: ");
+   		 scanf("%s", s[count].aspect);
+         printf("Shirt updated successfully.\n\n");
+            
+		 getch();
+   		 system("cls");
+         return;
+      }
+   }
+   printf("Shirt not found.\n\n");
+   
+   getch();
+   system("cls");
+}
 
-}tmo;
+// Function to delete a shirt in closet
+void deleteShirt() {
+   int id, i, j;
+   printf("Enter the ID of the shirt: ");
+   scanf("%d", &id);
+   for (i = 0; i < count; i++) {
+      if (s[i].id == id) {
+         for (j = i; j < count - 1; j++) {
+            s[j] = s[j+1];
+         }
+         count--;
+         printf("Shirt deleted successfully.\n\n");
+            
+		getch();
+   		system("cls");
+         return;
+      }
+   }
+   printf("Shirt not found.\n\n");
+   
+   getch();
+   system("cls");
+}
 
-int tecla () { //ESTRUTURA QUE HABILITA USO DE TECLAS
-    int varTecla;
+//Structure to enable keys
+int key () {
+    int varKey;
     while (1) {
         if (kbhit()) {
-            varTecla = getch();
-            return varTecla;
+            varKey = getch();
+            return varKey;
         }
     }
 }
 
-int main () { //FUN��O PRINCIPAL
+int main() {
 	
-	setlocale(LC_ALL, "Portuguese"); //LINGUA LOCAL PORTUGU�S
-	
-	tCadastro cadastro;
-	
-	tela_inicial ();
-	
-return 0;
+//Structure to use Time.h
+struct tm *now;
+time_t seconds;
+time(&seconds);
+now = localtime(&seconds);
+   
+int i, c, close = 0, line = 0;system("cls");
+   
+//Loading
+for(i=0;i<5;i++){
+	printf("\n\n\t/ / / / / / LOADING / / / / / /");
+	Sleep(100);
+	system("cls");
+	printf("\n\n\t| | | | | | LOADING | | | | | |");
+	Sleep(100);
+	system("cls");
+	printf("\n\n\t\\ \\ \\ \\ \\ \\ LOADING \\ \\ \\ \\ \\ \\ ");
+	Sleep(100);
+	system("cls");
+	printf("\n\n\t- - - - - - LOADING - - - - - -");
+	Sleep(100);
+	system("cls");
 }
-
-void tela_inicial () { //PAGINA INICIAL DO PROGRAMA
 	
-	tmo *atual;
-	time_t segundos; //FORMATA PARA SEGUNDOS
-	time(&segundos); //LOCAL DE MEMORIA DOS SEGUNDOS
-//	atual = localtime(&segundos); //HORARIO DO LOCAL ATUAL
+do {  
+      printf("\t\t\t\t\t %d:%d %d/%d/%d \n\n", now->tm_hour, now->tm_min, now->tm_mday, now->tm_mon+1, now->tm_year+1900);
+      printf("1 ~> Create a new shirt \n"
+       "2    Read a shirt \n"
+	   "3    Update a shirt \n"
+	   "4    Delete a shirt \n"
+	   "5    Exit \n");
 
-    int c, i;
-    int linha = 0;
-    
-    system("cls");
-    	
-		for(i=0;i<5;i++){ //TELA DE CARREGAMENTO
-		printf("\n\n\t/ / / / / / CARREGANDO / / / / / /");
-		Sleep(100);
-		//system("color CF");
-		system("cls");
-		printf("\n\n\t| | | | | | CARREGANDO | | | | | |");
-		Sleep(100);
-		//system("color AF");
-		system("cls");
-		printf("\n\n\t\\ \\ \\ \\ \\ \\ CARREGANDO \\ \\ \\ \\ \\ \\ ");
-		Sleep(100);
-		//system("color 3F");
-		system("cls");
-		printf("\n\n\t- - - - - - CARREGANDO - - - - - -");
-		Sleep(100);
-		//system("color 7F");
-		system("cls");
-	}
-	//TELA PRINCIPAL COM OP��ES
-	printf("\t\t %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
-    printf("1 ~> Cadastro de funcion�rio \n"
-           "2    Lista de funcion�rios cadastrados \n"
-           "3    Salvar Funcionarios \n"
-		   "4    Deletar um cadastro de funcionario \n"
-		   "5    Pesquisar o cadastro de um funcion�rio \n"
-		   "6    Modificar informa��es sobre cadastro de um funcion�rio \n"
-		   "0    Sair");
-
-    while (1) { // CONDICIONAL PARA USO DAS TECLAS
-        if (kbhit()) {
-            system("cls");
-            c = tecla();
-
-            if (c == 80) { //APERTAR PARA BAIXO
-                linha++;
-                if (linha > 6)
-                    linha = 0;
-            }
-            if (c == 72) {  // APERTAR PARA CIMA
-                linha--;
-                if (linha < 0)
-                    linha = 6;
-            }
-            if (c == 13)  {  // APERTAR ENTER
-            	if (linha == 0) {
-                	
-                    cadastrar_funcionarios ();
-
-                } else if (linha == 1) {
-                	
-                    imprimir_funcionarios ();
-
-                } else if (linha == 2) {
-                	
-                    salvar_funcionarios ();
-                
-                } else if (linha == 3) {
-                	
-                    deletar_funcionario ();
-                    
-                } else if (linha == 4) {
-                	
- 					pesquisar_funcionarios ();
- 					
-                } else if (linha == 5) {
-                	
-					modificar_funcionarios ();
-					
-                } else if (linha == 6) {
-                    system("cls");
-                    	for(i=0;i<5;i++){ // TELA DE CARREGAMENTO
-							printf("\n\n\t/ / / / / / FECHANDO PROGRAMA / / / / / /");
+	// Conditional for use of keys
+	while (1) {
+	    if (kbhit()) { system("cls"); c = key();
+	        
+	        //Press down
+	        if (c == 80) {
+	            line++;
+	            if (line > 4)
+	                line = 0;
+	        }
+	        // Press up
+	        if (c == 72) {
+	            line--;
+	            if (line < 0)
+	                line = 4;
+	        }
+	        //Press enter
+	        if (c == 13)  {
+	        	if (line == 0) {
+	                createShirt();
+	            } else if (line == 1) {
+	                readShirt();
+	            } else if (line == 2) {
+	                updateShirt();
+	            } else if (line == 3) {
+	                deleteShirt();
+	            } else if (line == 4) {system("cls");
+	                
+	                	// Loading
+	                	for(i=0;i<5;i++){
+							printf("\n\n\t/ / / / / / CLOSING PROGRAM / / / / / /");
 							Sleep(100);
-							//system("color CF");
 							system("cls");
-							printf("\n\n\t| | | | | | FECHANDO PROGRAMA | | | | | |");
+							printf("\n\n\t| | | | | | CLOSING PROGRAM | | | | | |");
 							Sleep(100);
-							//system("color AF");
 							system("cls");
-							printf("\n\n\t\\ \\ \\ \\ \\ \\ FECHANDO PROGRAMA \\ \\ \\ \\ \\ \\ ");
+							printf("\n\n\t\\ \\ \\ \\ \\ \\ CLOSING PROGRAM \\ \\ \\ \\ \\ \\ ");
 							Sleep(100);
-							//system("color 3F");
 							system("cls");
-							printf("\n\n\t- - - - - - FECHANDO PROGRAMA - - - - - -");
+							printf("\n\n\t- - - - - - CLOSING PROGRAM - - - - - -");
 							Sleep(100);
-							//system("color 7F");
 							system("cls");
 							}
-                    exit(0);
-                }
-            }// POSI��ES DA SETA
-            if (linha == 0) { 
-            	printf("\t\t %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
-	            printf("1 ~> Cadastro de funcion�rio \n"
-           		"2    Lista de funcion�rios cadastrados \n"
-           		"3    Salvar Funcionarios \n"
-		   		"4    Deletar um cadastro de funcionario \n"
-		   		"5    Pesquisar o cadastro de um funcion�rio \n"
-		   		"6    Modificar informa��es sobre cadastro de um funcion�rio \n"
-		   		"0    Sair");
-
-            }
-            if (linha == 1) {
-            	printf("\t\t %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
-	            printf("1    Cadastro de funcion�rio \n"
-           		"2 ~> Lista de funcion�rios cadastrados \n"
-           		"3    Salvar Funcionarios \n"
-		   		"4    Deletar um cadastro de funcionario \n"
-		   		"5    Pesquisar o cadastro de um funcion�rio \n"
-		   		"6    Modificar informa��es sobre cadastro de um funcion�rio \n"
-		   		"0    Sair");
-
-            }
-            if (linha == 2) {
-            	printf("\t\t %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
-	            printf("1    Cadastro de funcion�rio \n"
-           		"2    Lista de funcion�rios cadastrados \n"
-           		"3 ~> Salvar Funcionarios \n"
-		   		"4    Deletar um cadastro de funcionario \n"
-		   		"5    Pesquisar o cadastro de um funcion�rio \n"
-		   		"6    Modificar informa��es sobre cadastro de um funcion�rio \n"
-		   		"0    Sair");
-            }
-            if (linha == 3) {
-            	printf("\t\t %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
-	            printf("1    Cadastro de funcion�rio \n"
-           		"2    Lista de funcion�rios cadastrados \n"
-           		"3    Salvar Funcionarios \n"
-		   		"4 ~> Deletar um cadastro de funcionario \n"
-		   		"5    Pesquisar o cadastro de um funcion�rio \n"
-		   		"6    Modificar informa��es sobre cadastro de um funcion�rio \n"
-		   		"0    Sair");
+	                exit(0);
+	            }    
+	        }
+	        
+	        // Arrow positions
+	        if (line == 0) {
+	        	printf("\t\t\t\t\t %d:%d %d/%d/%d \n\n", now->tm_hour, now->tm_min, now->tm_mday, now->tm_mon+1, now->tm_year+1900);
+	            printf("1 ~> Create a new shirt \n"
+			       "2    Read a shirt \n"
+				   "3    Update a shirt \n"
+				   "4    Delete a shirt \n"
+				   "5    Exit \n");
+	        }
+	        if (line == 1) {
+	        	printf("\t\t\t\t\t %d:%d %d/%d/%d \n\n", now->tm_hour, now->tm_min, now->tm_mday, now->tm_mon+1, now->tm_year+1900);
+	            printf("1    Create a new shirt \n"
+			       "2 ~> Read a shirt \n"
+				   "3    Update a shirt \n"
+				   "4    Delete a shirt \n"
+				   "5    Exit \n");
+	        }
+	        if (line == 2) {
+	        	printf("\t\t\t\t\t %d:%d %d/%d/%d \n\n", now->tm_hour, now->tm_min, now->tm_mday, now->tm_mon+1, now->tm_year+1900);
+	            printf("1    Create a new shirt \n"
+			       "2    Read a shirt \n"
+				   "3 ~> Update a shirt \n"
+				   "4    Delete a shirt \n"
+				   "5    Exit \n");
+	        }
+	        if (line == 3) {
+	        	printf("\t\t\t\t\t %d:%d %d/%d/%d \n\n", now->tm_hour, now->tm_min, now->tm_mday, now->tm_mon+1, now->tm_year+1900);
+	            printf("1    Create a new shirt \n"
+			       "2    Read a shirt \n"
+				   "3    Update a shirt \n"
+				   "4 ~> Delete a shirt \n"
+				   "5    Exit \n");
 			}
-			if (linha == 4) {
-				printf("\t\t %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
-	            printf("1    Cadastro de funcion�rio \n"
-           		"2    Lista de funcion�rios cadastrados \n"
-           		"3    Salvar Funcionarios \n"
-		   		"4    Deletar um cadastro de funcionario \n"
-		   		"5 ~> Pesquisar o cadastro de um funcion�rio \n"
-		   		"6    Modificar informa��es sobre cadastro de um funcion�rio \n"
-		   		"0    Sair");
+			if (line == 4) {
+				printf("\t\t\t\t\t %d:%d %d/%d/%d \n\n", now->tm_hour, now->tm_min, now->tm_mday, now->tm_mon+1, now->tm_year+1900);
+	            printf("1    Create a new shirt \n"
+			       "2    Read a shirt \n"
+				   "3    Update a shirt \n"
+				   "4    Delete a shirt \n"
+				   "5 ~> Exit \n");
 			}
-			if (linha == 5) {
-				printf("\t\t %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
-	            printf("1    Cadastro de funcion�rio \n"
-           		"2    Lista de funcion�rios cadastrados \n"
-           		"3    Salvar Funcionarios \n"
-		   		"4    Deletar um cadastro de funcionario \n"
-		   		"5    Pesquisar o cadastro de um funcion�rio \n"
-		   		"6 ~> Modificar informa��es sobre cadastro de um funcion�rio \n"
-		   		"0    Sair");
-			}
-			if (linha == 6) {
-				printf("\t\t %d:%d:%d  %d/%d/%d \n", atual->hour, atual->min, atual->sec, atual->dia, atual->mes, atual->ano+1900);
-	            printf("1    Cadastro de funcion�rio \n"
-           		"2    Lista de funcion�rios cadastrados \n"
-           		"3    Salvar Funcionarios \n"
-		   		"4    Deletar um cadastro de funcionario \n"
-		   		"5    Pesquisar o cadastro de um funcion�rio \n"
-		   		"6    Modificar informa��es sobre cadastro de um funcion�rio \n"
-		   		"0 ~> Sair");
-			}
-        }
-    }
-}
-
-void cadastrar_funcionarios () { //TELA DE CADASTRO
-	
-	int id;
-	tCadastro cadastro;
-	
-	do{
-	
-		system("cls");
-			
-	printf("Informe o nome do funcion�rio: ");
-	fflush(stdin);
-	fgets(cadastro.nome[id], 50, stdin);
-		
-	printf("Informe a idade do funcion�rio: ");
-	scanf("%d", &cadastro.idade[id]);
-	
-	printf("Informe o CPF do duncion�rio: ");
-	scanf("%d", &cadastro.cpf[id]);
-        	
-	system("cls");
-	
-	printf("\n\n----------- Funcion�rio ------------\n\n");
-	printf("Nome: %s \n", cadastro.nome[id]);
-	printf("Idade: %d \n", cadastro.idade[id]);
-	printf("CPF: %d \n", cadastro.cpf[id]);
-	printf("------------------------------------\n\n");
-	
-	printf("\n\nFuncion�rio Cadastrado com sucesso! \n\n");
-	
-	printf("\n\nDeseja adicionar outro cadastro? \n");
-	fflush(stdin);
-	scanf("%s", &cadastro.iu);
-	
-		system("cls");
-
-	id++; //PARA AVAN�AR DE LUGAR NO VETOR		
-	} while (strcmp(outro, cadastro.iu) == 0);
-		
-}
-
-void imprimir_funcionarios () { //TELA DE IMPRESS�O DE FUNCIONARIOS
-	
-	tCadastro cadastro;
-
-	int i;
-	
-		system("cls");
-	
-	for(i=0;i<TAM;i++) {
-		if(cadastro.idade[i]>0) {
-			printf("\n\n----------- Funcion�rio ------------\n\n");
-			printf("Nome: %s \n", cadastro.nome[i]);
-			printf("Idade: %d \n", cadastro.idade[i]);
-			printf("CPF: %d \n", cadastro.cpf[i]);
-			printf("------------------------------------\n\n");
-		} else {
-			break;
-		}
+	    }
 	}
-		
-	system("pause");
-	system("cls");
-	
-}
 
-void salvar_funcionarios () { //SALVA EM ARQUIVO .BIN
-	
-	int i;
-	tCadastro cadastro;
-	FILE *file = fopen("cadastros.bin", "wb");
-	
-		
-			if (file == NULL) {
-				printf("Arquivo n�o abriu");
-			}
-			
-			fwrite(&cadastro, sizeof(tCadastro), 1, file);
-			
-			printf("\n\nFuncion�rio salvo! \n\n");
-			system("pause");
-			system("cls");
-			fclose (file);
-	
-}
-
-void deletar_funcionario () { //"DELETA" FUNCIONARIO SELECIONADO
-	
-	tCadastro cadastro;
-	int pesquisa, i;
-	
-	do {
-		printf("Digite o CPF do funcion�rio: ");
-		scanf("%d", &pesquisa);
-		
-		for(i=0;i<TAM;i++){
-			if(cadastro.cpf[i] == pesquisa){
-				cadastro.idade[i]=0; //ATRIBUI VALOR DA IDADE A ZERO
-				printf("\nCadastro deletado\n\n");
-				system("pause");
-				break;
-			}
-		}
-		
-		system("cls");
-			
-	} while (strcmp(outro, cadastro.iu) == 0);	
-		
-}
-
-void pesquisar_funcionarios () {//VARRE OS DADOS E INFORMA O SELECIONADO
-	
-	tCadastro cadastro;
-	int pesquisa, i;
-	
-	do {
-		printf("Digite o CPF do funcion�rio: ");
-		scanf("%d", &pesquisa);
-		
-		for(i=0;i<TAM;i++){
-			if(cadastro.cpf[i] == pesquisa){
-			printf("\n\n----------- Funcion�rio ------------\n\n");
-			printf("Nome: %s \n", cadastro.nome[i]);
-			printf("Idade: %d \n", cadastro.idade[i]);
-			printf("CPF: %d \n", cadastro.cpf[i]);
-			printf("------------------------------------\n\n");
-			} 
-		}
-		  
-	printf("Deseja pesquisar outro cadastro? \n");
-	fflush(stdin);
-	scanf("%s", &cadastro.iu);
-	
-		system("cls");
-			
-	} while (strcmp(outro, cadastro.iu) == 0);
-}
-
-void modificar_funcionarios ()  {//PESQUISA E MODIFICA OS DADOS
-	
-	tCadastro cadastro;
-	int pesquisa, i, aux;
-	char aux1[50];
-	
-	do {
-		printf("Digite o CPF do funcion�rio: ");
-		scanf("%d", &pesquisa);
-		
-		for(i=0;i<TAM;i++){
-			if(cadastro.cpf[i] == pesquisa){
-				printf("\n\n----------- Funcion�rio ------------\n\n");
-				printf("Nome: %s \n", cadastro.nome[i]);
-				printf("Idade: %d \n\n\n", cadastro.idade[i]);
-				printf("CPF: %d \n", cadastro.cpf[i]);
-				printf("------------------------------------\n\n");
-				
-				printf("Digite o novo nome: ");
-				fflush(stdin);
-				fgets(aux1, 50, stdin);
-				strcpy(cadastro.nome[i], aux1);
-
-				printf("Digite a nova idade: ");
-				scanf("%d", &aux);
-				cadastro.idade[i] = aux;
-				
-				printf("\n\n----------- Funcion�rio ------------\n\n");
-				printf("Nome: %s \n", cadastro.nome[i]);
-				printf("Idade: %d \n\n\n", cadastro.idade[i]);
-				printf("CPF: %d \n", cadastro.cpf[i]);
-				printf("------------------------------------\n\n");
-			} 
-		}
-		  
-	printf("Deseja modificar outro cadastro? \n");
-	fflush(stdin);
-	scanf("%s", &cadastro.iu);
-	
-		system("cls");
-			
-	} while (strcmp(outro, cadastro.iu) == 0);	
-	
-	
-}
+	}while (close == 0);
+ }
+ 
+//by Kintiz :)
