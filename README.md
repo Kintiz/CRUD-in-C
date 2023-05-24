@@ -18,7 +18,7 @@ Para compilar e executar o projeto em seu sistema, siga as seguintes etapas:
 3. Navegue até o diretório onde os arquivos do projeto estão localizados.
 4. Execute o comando de compilação.
 
-> And use the arrow keys and the keyboard enter to select the options.
+> E utilize as setas do teclado para selecionar as opções.
 
 Agora você pode interagir com o Sistema de Gerenciamento de Closet através do menu apresentado no console.
 
